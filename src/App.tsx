@@ -4,7 +4,7 @@ import { LoginForm } from './LoginForm'
 function App() {
 
   return (
-    <div className={'h-full w-screen'}>
+    <div>
         <LoginForm />
     </div>
   )

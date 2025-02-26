@@ -9,4 +9,5 @@ export interface PlaceType {
     price: number;
     title: string;
     updatedAt: Date;
+    imageName: string;
 }

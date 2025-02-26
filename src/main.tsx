@@ -1,27 +1,55 @@
+// index.tsx ou votre fichier de routeur
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
-import App from './App.tsx';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './Home.tsx';
+import Place from "./Place/Place.tsx";
+import Layout from "./Layout.tsx";
+import App from './App.tsx'; // Page de connexion
+import { ProtectedRoute } from './ProtectedRoute';
 import './index.css';
 
 const router = createBrowserRouter([
     {
-      path: "/",
-      element: <App />,
+        path: "/",
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: (
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "home",
+                element: (
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "place/:id",
+                element: (
+                    <ProtectedRoute>
+                        <Place />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "login",
+                element: <App />,
+            },
+        ],
     },
-    {
-      path: "/home",
-      element: <Home />,
-    },
-  ]);
+]);
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <div className='min-h-screen min-w-screen'>
-        <RouterProvider router={router} />
+        <div className='h-screen w-screen'>
+            <RouterProvider router={router} />
         </div>
     </StrictMode>
-)
+);

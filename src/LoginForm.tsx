@@ -1,19 +1,22 @@
-// src/components/LoginForm.tsx
 import { Alert, Button, CircularProgress, TextField } from "@mui/material";
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useLogin } from "./hooks/useLogin";
+import {useNavigate} from "react-router-dom";
 
 export function LoginForm() {
+  /*TODO modifier les valeurs par défaut */
   const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("test");
 
   const { login, data, error, loading } = useLogin();
+  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await login(email, password);
-    // La redirection est gérée dans le hook si tout se passe bien
-  }
+    if (data?.token && !loading) {
+      navigate("/home");
+    }  }
 
   return (
     <div className="max-w-md p-6 mx-auto mt-10 bg-white rounded-md shadow-sm">
@@ -50,14 +53,7 @@ export function LoginForm() {
 
       {error && (
         <Alert severity="error" className="mt-4">
-          {error}
-        </Alert>
-      )}
-
-      {/* Par exemple, si vous souhaitez afficher le token pour debug */}
-      {data && (
-        <Alert severity="success" className="mt-4">
-          Token reçu : {data.token}
+          Erreur lors de la connexion
         </Alert>
       )}
     </div>

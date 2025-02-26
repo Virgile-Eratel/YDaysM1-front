@@ -41,8 +41,9 @@ function Home() {
   }, []);
 
   return (
-      <div className={"w-screen h-full"}>
+      <div className={"w-full h-full"}>
         <Map places={places} />
+        <p>Liste des éléments affiché :</p>
         {places.length > 0 ? (
             <ul>
               {places.map((place) => (
