@@ -1,10 +1,11 @@
 import './App.css'
+import { LoginForm } from './LoginForm'
 
 function App() {
 
   return (
-    <div className={'bg-red-400'}>
-        <p>text</p>
+    <div className={'h-full w-screen'}>
+        <LoginForm />
     </div>
   )
 }
