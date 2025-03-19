@@ -42,12 +42,6 @@ export default function PlacesGrid({ places }: PlacesListProps) {
                                 </Typography>
                             }
                             {
-                                place.description &&
-                                <Typography variant="body2" color="text.secondary">
-                                    {place.description}
-                                </Typography>
-                            }
-                            {
                                 place.price != undefined &&
                                 <Typography variant="subtitle1" fontWeight="semibold">
                                     { place.price > 0 ? `Prix : ${place.price}€` : "Gratuit" }

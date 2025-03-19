@@ -1,4 +1,3 @@
-// Home.tsx
 import { useEffect, useState } from 'react';
 import Map from './Places/Map';
 import PlacesList from './Places/PlacesList';
@@ -6,6 +5,9 @@ import { PlaceType } from './types/PlaceType';
 import { Fab } from '@mui/material';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
+import {SearchBarPlace} from "./components/SearchBarPlace.tsx";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function Home() {
   const [places, setPlaces] = useState<PlaceType[]>([]);
@@ -47,7 +49,12 @@ function Home() {
   };
 
   return (
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+
       <div className="w-full h-full" style={{ position: 'relative', paddingBottom: '80px' }}>
+          <div className={"flex justify-center pb-3"}>
+          <SearchBarPlace/>
+          </div>
         {places.length <= 0 ? (
             <div className="text-xl text-center">
               Il semble qu'aucun lieu n'est disponible
@@ -73,6 +80,7 @@ function Home() {
           {view === 'map' ? "Liste" : "Carte"}
         </Fab>
       </div>
+      </LocalizationProvider>
   );
 }
 

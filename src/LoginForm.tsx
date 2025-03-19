@@ -5,8 +5,8 @@ import {useNavigate} from "react-router-dom";
 
 export function LoginForm() {
   /*TODO modifier les valeurs par défaut */
-  const [email, setEmail] = useState("test@gmail.com");
-  const [password, setPassword] = useState("test");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { login, data, error, loading } = useLogin();
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export function LoginForm() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await login(email, password);
+    localStorage.setItem("emailUser", email);
     if (data?.token && !loading) {
       navigate("/home");
     }  }

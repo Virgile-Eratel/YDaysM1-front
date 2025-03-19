@@ -6,6 +6,7 @@ import {AccountCircle} from "@mui/icons-material";
 const Layout: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
+    const emailUser= (localStorage.getItem('emailUser'));
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -57,6 +58,9 @@ const Layout: React.FC = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
+                        { emailUser &&
+                            <MenuItem>{`Connecté en tant que ${emailUser}`}</MenuItem>
+                        }
                         <MenuItem onClick={handleLogout}>déconnexion</MenuItem>
                     </Menu>
                 </Toolbar>
