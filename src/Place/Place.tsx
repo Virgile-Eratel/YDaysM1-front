@@ -48,7 +48,7 @@ export default function Place() {
                         place.imageName ? (
                             <img src={`http://localhost:8080/images/place/${place.imageName}`} alt={`image-${place.title}`} />
                         ) : (
-                            <img src="/images/noImage.webp" alt={`image-${place.title}`} />
+                            <img src="/images/defPlace.png" alt={`image-${place.title}`} />
                         )
                     }
                     </div>

@@ -1,9 +1,8 @@
-// Map.tsx
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { PlaceType } from "./types/PlaceType.ts";
+import { PlaceType } from "../types/PlaceType.ts";
 
 interface MapProps {
     places: PlaceType[];
@@ -43,11 +42,13 @@ export default function Map({ places }: MapProps) {
             // Définition des coordonnées sous la forme [longitude, latitude]
             const coordinates: [number, number] = [place.longitude, place.latitude];
 
+            if(!coordinates[0] || !coordinates[1]) return;
+
             // Création d'une div pour le marqueur
             const markerElement = document.createElement('div');
             markerElement.style.backgroundImage = place.imageName
                 ? `url('http://localhost:8080/images/place/${place.imageName}')`
-                : "url('images/noImage.webp')";
+                : "url('images/defPlace.png')";
             markerElement.style.backgroundSize = 'cover';
             markerElement.style.width = '50px';
             markerElement.style.height = '50px';
@@ -85,17 +86,18 @@ export default function Map({ places }: MapProps) {
             mapRef.current.setZoom(12);
         } else {
             // Sinon, ajuster la vue pour inclure tous les marqueurs
-            mapRef.current.fitBounds(bounds, { padding: 50 });
+            mapRef.current.fitBounds(bounds, { padding: 50, duration: 1000 });
         }
     }, [places, navigate]);
 
     return (
-        <>
+        <div className={'w-full h-full'}>
             <div
                 id="map-container"
                 ref={mapContainerRef}
-                style={{ width: '100%', height: '500px' }}
+                style={{ width: '100%', height: '800px' }}
+                className={'rounded-lg'}
             />
-        </>
+        </div>
     );
 }

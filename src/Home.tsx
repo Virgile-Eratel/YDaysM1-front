@@ -1,12 +1,16 @@
 // Home.tsx
 import { useEffect, useState } from 'react';
-import Map from './Map';
-import { PlaceType } from './types/PlaceType.ts';
+import Map from './Places/Map';
+import PlacesList from './Places/PlacesList';
+import { PlaceType } from './types/PlaceType';
+import { Fab } from '@mui/material';
+import ListIcon from '@mui/icons-material/List';
+import MapIcon from '@mui/icons-material/Map';
 
 function Home() {
   const [places, setPlaces] = useState<PlaceType[]>([]);
+  const [view, setView] = useState<'map' | 'list'>('map');
 
-  // Fonction pour récupérer la liste des lieux
   async function getAllPlaces() {
     const token = localStorage.getItem("token");
 
@@ -24,7 +28,6 @@ function Home() {
     return await response.json();
   }
 
-  // Chargement des données lors du montage du composant
   useEffect(() => {
     async function fetchPlaces() {
       try {
@@ -36,25 +39,39 @@ function Home() {
         console.error(err);
       }
     }
-
     fetchPlaces();
   }, []);
 
+  const handleViewToggle = () => {
+    setView((prev) => (prev === 'map' ? 'list' : 'map'));
+  };
+
   return (
-      <div className={"w-full h-full"}>
-        <Map places={places} />
-        <p>Liste des éléments affiché :</p>
-        {places.length > 0 ? (
-            <ul>
-              {places.map((place) => (
-                  <li key={place.id}>
-                    {place.title} - {place.description} - {new Date(place.createdAt).toLocaleDateString()}
-                  </li>
-              ))}
-            </ul>
+      <div className="w-full h-full" style={{ position: 'relative', paddingBottom: '80px' }}>
+        {places.length <= 0 ? (
+            <div className="text-xl text-center">
+              Il semble qu'aucun lieu n'est disponible
+            </div>
+        ) : view === 'map' ? (
+            <Map places={places} />
         ) : (
-            <p>Aucun lieu trouvé.</p>
+            <PlacesList places={places} />
         )}
+
+        <Fab
+            color="inherit"
+            variant="extended"
+            onClick={handleViewToggle}
+            sx={{
+              position: 'fixed',
+              bottom: 16,
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }}
+        >
+          {view === 'map' ? <ListIcon sx={{ mr: 1 }} /> : <MapIcon sx={{ mr: 1 }} />}
+          {view === 'map' ? "Liste" : "Carte"}
+        </Fab>
       </div>
   );
 }

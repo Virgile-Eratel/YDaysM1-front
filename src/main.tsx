@@ -1,11 +1,10 @@
-// index.tsx ou votre fichier de routeur
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './Home.tsx';
 import Place from "./Place/Place.tsx";
 import Layout from "./Layout.tsx";
-import App from './App.tsx'; // Page de connexion
+import App from './App.tsx';
 import { ProtectedRoute } from './ProtectedRoute';
 import './index.css';
 

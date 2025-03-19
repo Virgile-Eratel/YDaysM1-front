@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, Container, IconButton, Menu, MenuItem} from '@mui/material';
+import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem} from '@mui/material';
 import {Outlet, useNavigate} from 'react-router-dom';
 import {AccountCircle} from "@mui/icons-material";
 
@@ -22,11 +22,15 @@ const Layout: React.FC = () => {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none' }}>
                 <Toolbar>
-                    <Typography variant="h6" component="div" className={'cursor-pointer'} onClick={() => navigate("/home")}>
-                        OutWork
-                    </Typography>
+                    <img
+                        src="/images/logo.png"
+                        alt="OutWork Logo"
+                        className="cursor-pointer"
+                        onClick={() => navigate("/home")}
+                        style={{height: 40, width: 'auto'}}
+                    />
                     <div className={'flex-1'}/>
                     <IconButton
                         size="large"
@@ -36,7 +40,7 @@ const Layout: React.FC = () => {
                         onClick={handleMenu}
                         color="inherit"
                     >
-                        <AccountCircle />
+                        <AccountCircle color={'primary'}/>
                     </IconButton>
                     <Menu
                         id="menu-appbar"
@@ -57,7 +61,7 @@ const Layout: React.FC = () => {
                     </Menu>
                 </Toolbar>
             </AppBar>
-            <Container style={{marginTop: '1rem'}}>
+            <Container style={{marginTop: '1rem'}} className={'text-black'}>
                 <Outlet/>
             </Container>
         </>
