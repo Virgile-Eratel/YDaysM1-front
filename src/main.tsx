@@ -6,6 +6,8 @@ import Place from "./Place/Place.tsx";
 import Layout from "./Layout.tsx";
 import App from './App.tsx';
 import { ProtectedRoute } from './ProtectedRoute';
+import { RoleProtectedRoute } from './RoleProtectedRoute';
+import CreatePlaceForm from './Place/CreatePlaceForm.tsx';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
                     <ProtectedRoute>
                         <Place />
                     </ProtectedRoute>
+                ),
+            },
+            {
+                path: "create-place",
+                element: (
+                    <RoleProtectedRoute requiredRole="owner">
+                        <CreatePlaceForm />
+                    </RoleProtectedRoute>
                 ),
             },
             {

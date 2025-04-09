@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 // On peut définir précisément la forme du JSON renvoyé par l’API
 // Ici, on suppose qu’il n’y a qu’un champ "token" dans la réponse :
 interface LoginResponseData {
+  role: 'user' | 'owner';
   token: string;
 }
 
@@ -44,8 +45,9 @@ export function useLogin(): UseLoginReturn {
       // Stockage du token dans le state
       setData(responseData);
 
-      // Stockage du token dans localStorage (pour usage ultérieur)
+      // Stockage du token et du role dans localStorage (pour usage ultérieur)
       localStorage.setItem("token", responseData.token);
+      localStorage.setItem("roleUser", responseData.role);
 
       // Redirection vers la page d’accueil ("/home", par exemple)
       navigate("/home");

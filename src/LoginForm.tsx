@@ -4,7 +4,6 @@ import { useLogin } from "./hooks/useLogin";
 import {useNavigate} from "react-router-dom";
 
 export function LoginForm() {
-  /*TODO modifier les valeurs par défaut */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem} from '@mui/material';
+import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem, Button} from '@mui/material';
 import {Outlet, useNavigate} from 'react-router-dom';
-import {AccountCircle} from "@mui/icons-material";
+import {AccountCircle, Add} from "@mui/icons-material";
 
 const Layout: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -10,6 +10,8 @@ const Layout: React.FC = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('roleUser');
+        localStorage.removeItem('emailUser');
         setAnchorEl(null);
         navigate("/login");
     }
@@ -20,6 +22,8 @@ const Layout: React.FC = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const roleUser= (localStorage.getItem('roleUser'));
 
     return (
         <>
@@ -33,6 +37,18 @@ const Layout: React.FC = () => {
                         style={{height: 40, width: 'auto'}}
                     />
                     <div className={'flex-1'}/>
+                    {
+                        roleUser === 'owner' &&
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            startIcon={<Add />}
+                            onClick={() => navigate("/create-place")}
+                            sx={{ mr: 2 }}
+                        >
+                            Ajouter mon espace sur outwork
+                        </Button>
+                    }
                     <IconButton
                         size="large"
                         aria-label="account of current user"
