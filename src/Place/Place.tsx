@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { PlaceType } from "../types/PlaceType.ts";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
-import {Rating} from "@mui/material";
+import { Divider, Box } from "@mui/material";
+import ReviewsList from "./ReviewsList";
+import AddReviewForm from "./AddReviewForm";
 dayjs.locale('fr');
 
 export default function Place() {
     const { id } = useParams();
     const [place, setPlace] = useState<PlaceType>();
     const [error, setError] = useState<boolean>(false);
+    const [refreshReviews, setRefreshReviews] = useState<number>(0);
 
     async function getPlaceById(id: string) {
         const token = localStorage.getItem("token");
@@ -82,10 +85,17 @@ export default function Place() {
                                     <p className="font-medium mb-4">{place.price > 0 ? `Prix : ${place.price}€` : "Gratuit"}</p> :
                                     <p className={'text-gray-400 mb-4'}>Non renseignée</p>
                             }
-                            <p className="text-sm text-gray-500">Commentaires</p>
-                            <p className={'text-gray-400 mb-4'}>Pas encore de commentaires</p>
-                            <p className="text-sm text-gray-500">Note des clients</p>
-                            <Rating readOnly disabled defaultValue={4.5} precision={0.5}/>
+                            <Divider sx={{ my: 3, width: '100%' }} />
+
+                            <Box width="100%">
+
+                                <ReviewsList placeId={id || ''} key={refreshReviews} />
+
+                                <AddReviewForm
+                                    placeId={id || ''}
+                                    onReviewAdded={() => setRefreshReviews(prev => prev + 1)}
+                                />
+                            </Box>
 
                         </div>
                     </>

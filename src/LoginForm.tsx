@@ -15,6 +15,9 @@ export function LoginForm() {
     await login(email, password);
     localStorage.setItem("emailUser", email);
     if (data?.token && !loading) {
+      if (data?.userId) {
+        localStorage.setItem("userId", data.userId.toString());
+      }
       navigate("/home");
     }  }
 

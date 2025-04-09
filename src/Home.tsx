@@ -12,6 +12,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 function Home() {
   const [places, setPlaces] = useState<PlaceType[]>([]);
   const [view, setView] = useState<'map' | 'list'>('map');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   async function getAllPlaces() {
     const token = localStorage.getItem("token");

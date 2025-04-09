@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 interface LoginResponseData {
   role: 'user' | 'owner';
   token: string;
+  userId?: number;
 }
 
 interface UseLoginReturn {
@@ -41,13 +42,17 @@ export function useLogin(): UseLoginReturn {
 
       // Récupération du token (si le format de la réponse est { "token": "..." })
       const responseData: LoginResponseData = await response.json();
+      console.log('Réponse de connexion:', responseData);
 
       // Stockage du token dans le state
       setData(responseData);
 
-      // Stockage du token et du role dans localStorage (pour usage ultérieur)
+      // Stockage du token, du role et de l'ID utilisateur dans localStorage (pour usage ultérieur)
       localStorage.setItem("token", responseData.token);
       localStorage.setItem("roleUser", responseData.role);
+      if (responseData.userId) {
+        localStorage.setItem("userId", responseData.userId.toString());
+      }
 
       // Redirection vers la page d’accueil ("/home", par exemple)
       navigate("/home");

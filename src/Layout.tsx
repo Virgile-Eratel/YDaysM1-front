@@ -12,6 +12,7 @@ const Layout: React.FC = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roleUser');
         localStorage.removeItem('emailUser');
+        localStorage.removeItem('userId');
         setAnchorEl(null);
         navigate("/login");
     }
