@@ -34,23 +34,46 @@ const Layout: React.FC = () => {
             <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none' }}>
                 <Toolbar>
                     <img
-                        src={roleUser === 'owner' ? "/images/outwork_logo_orange.png" : "/images/logo.png"}                        alt="OutWork Logo"
+                        src={roleUser === 'owner' ? "/images/outwork_logo_orange.png" : "/images/logo.png"}
+                        alt="OutWork Logo"
                         className="cursor-pointer"
                         onClick={() => navigate("/home")}
                         style={{height: 40, width: 'auto', objectFit: 'contain'}}
                     />
                     <div className={'flex-1'}/>
                     {
-                        roleUser === 'owner' &&
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            startIcon={<Add />}
-                            onClick={() => navigate("/create-place")}
-                            sx={{ mr: 2 }}
-                        >
-                            Ajouter mon espace sur outwork
-                        </Button>
+                        roleUser === 'owner' && (
+                            <>
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    startIcon={<Add />}
+                                    onClick={() => navigate("/create-place-home")}
+                                    sx={{
+                                        mr: 2,
+                                        display: { xs: 'none', sm: 'none', md: 'flex' }
+                                    }}
+                                >
+                                    Ajouter mon espace sur outwork
+                                </Button>
+
+                                <IconButton
+                                    color="primary"
+                                    onClick={() => navigate("/create-place-home")}
+                                    sx={{
+                                        mr: 1,
+                                        display: { xs: 'flex', sm: 'flex', md: 'none' },
+                                        backgroundColor: 'primary.main',
+                                        color: 'white',
+                                        '&:hover': {
+                                            backgroundColor: 'primary.dark',
+                                        }
+                                    }}
+                                >
+                                    <Add />
+                                </IconButton>
+                            </>
+                        )
                     }
                     <IconButton
                         size="large"

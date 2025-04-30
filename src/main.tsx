@@ -13,6 +13,7 @@ import ReservationSuccess from './Reservation/ReservationSuccess.tsx';
 import ReservationError from './Reservation/ReservationError.tsx';
 import OwnerReservations from './Owner/OwnerReservations.tsx';
 import './index.css';
+import {CreatePlaceHome} from "./Place/CreatePlaceHome.tsx";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
                     <ProtectedRoute>
                         <Place />
                     </ProtectedRoute>
+                ),
+            },
+            {
+                path: "create-place-home",
+                element: (
+                    <RoleProtectedRoute requiredRole="owner">
+                        <CreatePlaceHome />
+                    </RoleProtectedRoute>
                 ),
             },
             {

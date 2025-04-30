@@ -37,15 +37,18 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
     return (
         <Box
             sx={{
-                display: "flex",
+                display: { xs: "flex", sm: "flex" },
+                flexDirection: { xs: "column", sm: "column", md: "row" },
                 alignItems: "center",
-                width: 900,
-                height: 100,
+                width: { xs: "95%", sm: "95%", md: 900 },
+                maxWidth: "95%",
+                height: { xs: "auto", sm: "auto", md: 100 },
                 border: "1px solid",
                 borderColor: "primary.main",
-                borderRadius: "9999px",
-                px: 3,
-                py: 2,
+                borderRadius: { xs: "24px", sm: "24px", md: "9999px" },
+                px: { xs: 2, sm: 2, md: 3 },
+                py: { xs: 3, sm: 3, md: 2 },
+                gap: { xs: 2, sm: 2, md: 0 },
             }}
         >
             <TextField
@@ -56,11 +59,13 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                 onChange={(e) => setLocation(e.target.value)}
                 sx={{
                     flex: 1,
+                    width: { xs: "100%", md: "auto" },
                     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": { border: "none" },
                 }}
             />
 
-            <div className={"h-14 mx-6 bg-gray-300 w-[1px]"}/>
+            <div className={"h-14 mx-6 bg-gray-300 w-[1px] hidden md:block"}/>
+            <div className={"h-[1px] w-full bg-gray-300 block md:hidden"}/>
 
             <DatePicker
                 label="Date"
@@ -73,13 +78,15 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                         variant: "outlined",
                         sx: {
                             flex: 1,
+                            width: { xs: "100%", md: "auto" },
                             "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": { border: "none !important" },
                         },
                     },
                 }}
             />
 
-            <div className={"h-14 mx-6 bg-gray-300 w-[1px]"}/>
+            <div className={"h-14 mx-6 bg-gray-300 w-[1px] hidden md:block"}/>
+            <div className={"h-[1px] w-full bg-gray-300 block md:hidden"}/>
 
             <TimePicker
                 label="Horaire"
@@ -93,12 +100,14 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                         variant: "outlined",
                         sx: {
                             flex: 1,
+                            width: { xs: "100%", md: "auto" },
                             "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": { border: "none" },
                         },
                     },
                 }}
             />
-            <div className={"h-14 mx-6 bg-gray-300 w-[1px]"}/>
+            <div className={"h-14 mx-6 bg-gray-300 w-[1px] hidden md:block"}/>
+            <div className={"h-[1px] w-full bg-gray-300 block md:hidden"}/>
 
             <TextField
                 variant="outlined"
@@ -109,7 +118,8 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                 inputProps={{ min: 1 }}
                 sx={{
                     flex: 1,
-                    paddingRight: 3,
+                    width: { xs: "100%", md: "auto" },
+                    paddingRight: { xs: 0, md: 3 },
                     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": { border: "none" },
                 }}
             />
@@ -121,9 +131,10 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                 sx={{
                     backgroundColor: "primary.main",
                     color: "#fff",
-                    width: 48,
+                    width: { xs: "100%", md: 48 },
                     height: 48,
-                    borderRadius: "50%",
+                    borderRadius: { xs: "24px", md: "50%" },
+                    mt: { xs: 2, md: 0 },
                     "&:hover": {
                         backgroundColor: "primary.dark",
                     },
