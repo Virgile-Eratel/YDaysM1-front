@@ -41,7 +41,8 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
                 alignItems: "center",
                 width: 900,
                 height: 100,
-                border: "1px solid #0000FF",
+                border: "1px solid",
+                borderColor: "primary.main",
                 borderRadius: "9999px",
                 px: 3,
                 py: 2,
@@ -116,14 +117,15 @@ export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProp
             <IconButton
                 onClick={handleSearch}
                 disabled={loading}
+                color="primary"
                 sx={{
-                    backgroundColor: "#0000FF",
+                    backgroundColor: "primary.main",
                     color: "#fff",
                     width: 48,
                     height: 48,
                     borderRadius: "50%",
                     "&:hover": {
-                        backgroundColor: "#0000CC",
+                        backgroundColor: "primary.dark",
                     },
                 }}
             >

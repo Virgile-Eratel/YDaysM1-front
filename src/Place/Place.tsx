@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PlaceType } from "../types/PlaceType.ts";
-import dayjs, { formatDate } from "../utils/dateConfig";
+import { formatDate } from "../utils/dateConfig";
 import { Divider, Box, Grid, Typography } from "@mui/material";
 import ReviewsList from "./ReviewsList";
 import AddReviewForm from "./AddReviewForm";

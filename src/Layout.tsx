@@ -2,11 +2,14 @@ import React from 'react';
 import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem, Button, Divider} from '@mui/material';
 import {Outlet, useNavigate} from 'react-router-dom';
 import {AccountCircle, Add} from "@mui/icons-material";
+import { ThemeProvider } from '@mui/material/styles';
+import { useUserTheme } from './hooks/useUserTheme';
 
 const Layout: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
-    const emailUser= (localStorage.getItem('emailUser'));
+    const emailUser = localStorage.getItem('emailUser');
+    const theme = useUserTheme();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -27,15 +30,14 @@ const Layout: React.FC = () => {
     const roleUser= (localStorage.getItem('roleUser'));
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
             <AppBar position="static" sx={{ background: 'transparent', boxShadow: 'none' }}>
                 <Toolbar>
                     <img
-                        src="/images/logo.png"
-                        alt="OutWork Logo"
+                        src={roleUser === 'owner' ? "/images/outwork_logo_orange.png" : "/images/logo.png"}                        alt="OutWork Logo"
                         className="cursor-pointer"
                         onClick={() => navigate("/home")}
-                        style={{height: 40, width: 'auto'}}
+                        style={{height: 40, width: 'auto', objectFit: 'contain'}}
                     />
                     <div className={'flex-1'}/>
                     {
@@ -92,7 +94,7 @@ const Layout: React.FC = () => {
             <Container style={{marginTop: '1rem'}} className={'text-black'}>
                 <Outlet/>
             </Container>
-        </>
+        </ThemeProvider>
     );
 };
 
