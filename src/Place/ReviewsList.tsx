@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { Box, Typography, Rating, Paper, Avatar, CircularProgress, Divider, Stack } from "@mui/material";
-import dayjs from "dayjs";
+import dayjs, { formatDate } from "../utils/dateConfig";
 
 interface UserType {
     id: number;
@@ -182,7 +182,7 @@ export default function ReviewsList({ placeId }: ReviewsListProps) {
                                     {authorEmail}
                                 </Typography>
                                 <Typography variant="caption" color="text.secondary">
-                                    {review.createdAt ? dayjs(review.createdAt).format("DD MMMM YYYY") : "Date inconnue"}
+                                    {formatDate(review.createdAt)}
                                 </Typography>
                             </Box>
                                 <Box display="flex" flexDirection="column" alignItems="flex-start" flex="1"/>

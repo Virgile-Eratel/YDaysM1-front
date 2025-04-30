@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PlaceType } from "../types/PlaceType.ts";
-import dayjs from "dayjs";
-import 'dayjs/locale/fr';
-import { Divider, Box } from "@mui/material";
+import dayjs, { formatDate } from "../utils/dateConfig";
+import { Divider, Box, Grid, Typography } from "@mui/material";
 import ReviewsList from "./ReviewsList";
 import AddReviewForm from "./AddReviewForm";
-dayjs.locale('fr');
+import ReservationForm from "./ReservationForm";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function Place() {
     const { id } = useParams();
@@ -40,6 +41,7 @@ export default function Place() {
     }, [id]);
 
     return (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <div>
                 {error ? (
                     <div className="text-center text-red-500 text-lg">
@@ -62,46 +64,59 @@ export default function Place() {
                                 />
                             )}
                         </div>
-                        <div className="p-6 items-start justify-start flex flex-col">
-                            <h1 className="text-3xl font-bold my-6">{place.title}</h1>
 
-                            <p className="text-sm text-gray-500">Description</p>
-                            {
-                                place.description ? <p className="font-medium mb-4 text-start">{place.description}</p> :
-                                    <p className={'text-gray-400 mb-4'}>Non renseignée</p>
-                            }
-                            <p className="text-sm text-gray-500">Date de publication</p>
-                            <p className="font-medium mb-4">
-                                {dayjs(place.createdAt).format('DD MMMM YYYY')}
-                            </p>
-                            <p className="text-sm text-gray-500">Adresse</p>
-                            {
-                                place.address ? <p className="font-medium mb-4">{place.address}</p> :
-                                    <p className={'text-gray-400 mb-4'}>Non renseignée</p>
-                            }
-                            <p className="text-sm text-gray-500">Prix</p>
-                            {
-                                place.price ?
-                                    <p className="font-medium mb-4">{place.price > 0 ? `Prix : ${place.price}€` : "Gratuit"}</p> :
-                                    <p className={'text-gray-400 mb-4'}>Non renseignée</p>
-                            }
-                            <Divider sx={{ my: 3, width: '100%' }} />
+                        <Grid container spacing={4} sx={{ mt: 1 }}>
+                            {/* Colonne de gauche: Détails du lieu */}
+                            <Grid item xs={12} md={8}>
+                                <div className="p-6 items-start justify-start flex flex-col">
+                                    <h1 className="text-3xl font-bold my-6">{place.title}</h1>
 
-                            <Box width="100%">
+                                    <p className="text-sm text-gray-500">Description</p>
+                                    {
+                                        place.description ? <p className="font-medium mb-4 text-start">{place.description}</p> :
+                                            <p className={'text-gray-400 mb-4'}>Non renseignée</p>
+                                    }
+                                    <p className="text-sm text-gray-500">Date de publication</p>
+                                    <p className="font-medium mb-4">
+                                        {formatDate(place.createdAt)}
+                                    </p>
+                                    <p className="text-sm text-gray-500">Adresse</p>
+                                    {
+                                        place.address ? <p className="font-medium mb-4">{place.address}</p> :
+                                            <p className={'text-gray-400 mb-4'}>Non renseignée</p>
+                                    }
+                                    <p className="text-sm text-gray-500">Prix</p>
+                                    {
+                                        place.price ?
+                                            <p className="font-medium mb-4">{place.price > 0 ? `Prix : ${place.price}€ / nuit` : "Gratuit"}</p> :
+                                            <p className={'text-gray-400 mb-4'}>Non renseignée</p>
+                                    }
+                                    <Divider sx={{ my: 3, width: '100%' }} />
 
-                                <ReviewsList placeId={id || ''} key={refreshReviews} />
+                                    <Box width="100%">
+                                        <Typography variant="h6" gutterBottom>
+                                            Commentaires et évaluations
+                                        </Typography>
+                                        <ReviewsList placeId={id || ''} key={refreshReviews} />
 
-                                <AddReviewForm
-                                    placeId={id || ''}
-                                    onReviewAdded={() => setRefreshReviews(prev => prev + 1)}
-                                />
-                            </Box>
+                                        <AddReviewForm
+                                            placeId={id || ''}
+                                            onReviewAdded={() => setRefreshReviews(prev => prev + 1)}
+                                        />
+                                    </Box>
+                                </div>
+                            </Grid>
 
-                        </div>
+                            {/* Colonne de droite: Formulaire de réservation */}
+                            <Grid item xs={12} md={4}>
+                                <ReservationForm place={place} />
+                            </Grid>
+                        </Grid>
                     </>
                 ) : (
                     <div className="text-center text-gray-500">Chargement...</div>
                 )}
             </div>
+        </LocalizationProvider>
     );
 }

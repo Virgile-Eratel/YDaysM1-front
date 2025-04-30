@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem, Button} from '@mui/material';
+import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem, Button, Divider} from '@mui/material';
 import {Outlet, useNavigate} from 'react-router-dom';
 import {AccountCircle, Add} from "@mui/icons-material";
 
@@ -78,7 +78,14 @@ const Layout: React.FC = () => {
                         { emailUser &&
                             <MenuItem>{`Connecté en tant que ${emailUser}`}</MenuItem>
                         }
-                        <MenuItem onClick={handleLogout}>déconnexion</MenuItem>
+                        <MenuItem onClick={() => { handleClose(); navigate('/reservations'); }}>Mes réservations</MenuItem>
+
+                        {localStorage.getItem('roleUser') === 'owner' && (
+                            <MenuItem onClick={() => { handleClose(); navigate('/owner/reservations'); }}>Gestion des réservations</MenuItem>
+                        )}
+
+                        <Divider />
+                        <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar>

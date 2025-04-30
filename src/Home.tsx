@@ -8,6 +8,7 @@ import MapIcon from '@mui/icons-material/Map';
 import {SearchBarPlace} from "./components/SearchBarPlace.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "./utils/dateConfig";
 
 function Home() {
   const [places, setPlaces] = useState<PlaceType[]>([]);

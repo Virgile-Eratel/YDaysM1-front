@@ -1,6 +1,7 @@
 import { Box, TextField, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {DatePicker, TimePicker} from "@mui/x-date-pickers";
+import { DATE_FORMAT } from "../utils/dateConfig";
 
 export const SearchBarPlace = () => {
     return (
@@ -30,6 +31,7 @@ export const SearchBarPlace = () => {
 
             <DatePicker
                 label="Date"
+                format={DATE_FORMAT}
                 slots={{ textField: TextField }}
                 slotProps={{
                     textField: {

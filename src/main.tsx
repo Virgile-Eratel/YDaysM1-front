@@ -8,6 +8,10 @@ import App from './App.tsx';
 import { ProtectedRoute } from './ProtectedRoute';
 import { RoleProtectedRoute } from './RoleProtectedRoute';
 import CreatePlaceForm from './Place/CreatePlaceForm.tsx';
+import UserReservations from './Reservation/UserReservations.tsx';
+import ReservationSuccess from './Reservation/ReservationSuccess.tsx';
+import ReservationError from './Reservation/ReservationError.tsx';
+import OwnerReservations from './Owner/OwnerReservations.tsx';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -50,6 +54,38 @@ const router = createBrowserRouter([
             {
                 path: "login",
                 element: <App />,
+            },
+            {
+                path: "reservations",
+                element: (
+                    <ProtectedRoute>
+                        <UserReservations />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "reservation-success/:id",
+                element: (
+                    <ProtectedRoute>
+                        <ReservationSuccess />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "reservation-error/:id",
+                element: (
+                    <ProtectedRoute>
+                        <ReservationError />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "owner/reservations",
+                element: (
+                    <RoleProtectedRoute requiredRole="owner">
+                        <OwnerReservations />
+                    </RoleProtectedRoute>
+                ),
             },
         ],
     },
