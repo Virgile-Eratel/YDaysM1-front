@@ -59,13 +59,12 @@ export default function OwnerReservations() {
   const { reservations, stats, loading, error, fetchReservations, completeReservation, confirmReservation, cancelReservation } = useOwnerReservations();
   const [tabValue, setTabValue] = useState(0);
   const [notification, setNotification] = useState<{open: boolean; message: string; severity: 'success' | 'error'}>({open: false, message: '', severity: 'success'});
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchReservations();
   }, []);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -110,36 +109,6 @@ export default function OwnerReservations() {
 
   const handleCloseNotification = () => {
     setNotification(prev => ({ ...prev, open: false }));
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'confirmed':
-        return 'success';
-      case 'pending':
-        return 'warning';
-      case 'cancelled':
-        return 'error';
-      case 'completed':
-        return 'info';
-      default:
-        return 'default';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'confirmed':
-        return 'Confirmée';
-      case 'pending':
-        return 'En attente';
-      case 'cancelled':
-        return 'Annulée';
-      case 'completed':
-        return 'Terminée';
-      default:
-        return status;
-    }
   };
 
   const filteredReservations = (status?: string) => {
@@ -355,59 +324,61 @@ function ReservationTable({ reservations, onComplete, onConfirm, onCancel }: Res
                 />
               </TableCell>
               <TableCell>
-                {reservation.status === 'pending' && (
-                  <>
-                    <Tooltip title="Valider la réservation">
-                      <IconButton
-                        color="success"
-                        onClick={() => onConfirm(reservation.id)}
+                <Box display="flex" gap={1} flexWrap="nowrap">
+                  {reservation.status === 'pending' && (
+                      <>
+                        <Tooltip title="Valider la réservation">
+                          <IconButton
+                              color="success"
+                              onClick={() => onConfirm(reservation.id)}
+                              size="small"
+                          >
+                            <CheckCircleOutlineIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Annuler la réservation">
+                          <IconButton
+                              color="error"
+                              onClick={() => onCancel(reservation.id)}
+                              size="small"
+                          >
+                            <CancelIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                  )}
+                  {reservation.status === 'confirmed' && (
+                      <>
+                        <Tooltip title="Marquer comme terminée">
+                          <IconButton
+                              color="primary"
+                              onClick={() => onComplete(reservation.id)}
+                              size="small"
+                          >
+                            <DoneAllIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Annuler la réservation">
+                          <IconButton
+                              color="error"
+                              onClick={() => onCancel(reservation.id)}
+                              size="small"
+                          >
+                            <CancelIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                  )}
+                  <Tooltip title="Voir le logement">
+                    <IconButton
+                        color="info"
+                        onClick={() => navigate(`/place/${reservation.place.id}`)}
                         size="small"
-                      >
-                        <CheckCircleOutlineIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Annuler la réservation">
-                      <IconButton
-                        color="error"
-                        onClick={() => onCancel(reservation.id)}
-                        size="small"
-                      >
-                        <CancelIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                )}
-                {reservation.status === 'confirmed' && (
-                  <>
-                    <Tooltip title="Marquer comme terminée">
-                      <IconButton
-                        color="primary"
-                        onClick={() => onComplete(reservation.id)}
-                        size="small"
-                      >
-                        <DoneAllIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Annuler la réservation">
-                      <IconButton
-                        color="error"
-                        onClick={() => onCancel(reservation.id)}
-                        size="small"
-                      >
-                        <CancelIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                )}
-                <Tooltip title="Voir le logement">
-                  <IconButton
-                    color="info"
-                    onClick={() => navigate(`/place/${reservation.place.id}`)}
-                    size="small"
-                  >
-                    <AttachMoneyIcon />
-                  </IconButton>
-                </Tooltip>
+                    >
+                      <AttachMoneyIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </TableCell>
             </TableRow>
           ))}
