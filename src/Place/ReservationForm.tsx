@@ -111,7 +111,7 @@ export default function ReservationForm({ place }: ReservationFormProps) {
             <Box component="form" onSubmit={handleSubmit}>
                 <Box sx={{ mb: 2 }}>
                     <Typography variant="subtitle1" gutterBottom>
-                        Prix: {place.price}€ / nuit
+                        Prix: {place.price}€ / jour
                     </Typography>
                 </Box>
 
@@ -158,7 +158,7 @@ export default function ReservationForm({ place }: ReservationFormProps) {
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
                         <Typography>
-                            {place.price}€ x {durationInDays} nuits
+                            {place.price}€ x {durationInDays} jour(s)
                         </Typography>
                         <Typography>
                             {totalPrice}€

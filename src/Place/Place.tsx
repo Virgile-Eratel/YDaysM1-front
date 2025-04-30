@@ -88,7 +88,7 @@ export default function Place() {
                                     <p className="text-sm text-gray-500">Prix</p>
                                     {
                                         place.price ?
-                                            <p className="font-medium mb-4">{place.price > 0 ? `Prix : ${place.price}€ / nuit` : "Gratuit"}</p> :
+                                            <p className="font-medium mb-4">{place.price > 0 ? `Prix : ${place.price}€ / jour` : "Gratuit"}</p> :
                                             <p className={'text-gray-400 mb-4'}>Non renseignée</p>
                                     }
                                     <Divider sx={{ my: 3, width: '100%' }} />
