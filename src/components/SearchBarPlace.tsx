@@ -1,9 +1,39 @@
-import { Box, TextField, IconButton } from "@mui/material";
+import { useState } from "react";
+import { Box, TextField, IconButton, CircularProgress } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import {DatePicker, TimePicker} from "@mui/x-date-pickers";
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { DATE_FORMAT } from "../utils/dateConfig";
+import { Dayjs } from "dayjs";
 
-export const SearchBarPlace = () => {
+interface SearchBarPlaceProps {
+    onSearch: (results: {
+        location: string | undefined;
+        date: Dayjs | null;
+        time: Dayjs | null;
+        guests: number | null
+    }) => void;
+    loading?: boolean;
+}
+
+export const SearchBarPlace = ({ onSearch, loading = false }: SearchBarPlaceProps) => {
+    const [location, setLocation] = useState<string>("");
+    const [date, setDate] = useState<Dayjs | null>(null);
+    const [time, setTime] = useState<Dayjs | null>(null);
+    const [guests, setGuests] = useState<number | null>(null);
+
+    const handleSearch = () => {
+        // Créer un objet avec les paramètres de recherche
+        const searchParams = {
+            location: location.trim() !== "" ? location : undefined,
+            date: date,
+            time: time,
+            guests: guests
+        };
+
+        // Appeler la fonction de recherche fournie par le parent
+        onSearch(searchParams);
+    };
+
     return (
         <Box
             sx={{
@@ -21,6 +51,8 @@ export const SearchBarPlace = () => {
                 variant="outlined"
                 label="Lieu"
                 placeholder="Rechercher"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 sx={{
                     flex: 1,
                     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -32,6 +64,8 @@ export const SearchBarPlace = () => {
             <DatePicker
                 label="Date"
                 format={DATE_FORMAT}
+                value={date}
+                onChange={(newValue) => setDate(newValue)}
                 slots={{ textField: TextField }}
                 slotProps={{
                     textField: {
@@ -50,6 +84,8 @@ export const SearchBarPlace = () => {
                 label="Horaire"
                 format="HH:mm"
                 ampm={false}
+                value={time}
+                onChange={(newValue) => setTime(newValue)}
                 slots={{ textField: TextField }}
                 slotProps={{
                     textField: {
@@ -67,6 +103,9 @@ export const SearchBarPlace = () => {
                 variant="outlined"
                 label="Personnes"
                 type={"number"}
+                value={guests === null ? "" : guests}
+                onChange={(e) => setGuests(e.target.value ? parseInt(e.target.value) : null)}
+                inputProps={{ min: 1 }}
                 sx={{
                     flex: 1,
                     paddingRight: 3,
@@ -75,6 +114,8 @@ export const SearchBarPlace = () => {
             />
 
             <IconButton
+                onClick={handleSearch}
+                disabled={loading}
                 sx={{
                     backgroundColor: "#0000FF",
                     color: "#fff",
@@ -86,7 +127,7 @@ export const SearchBarPlace = () => {
                     },
                 }}
             >
-                <SearchIcon/>
+                {loading ? <CircularProgress size={24} color="inherit" /> : <SearchIcon />}
             </IconButton>
         </Box>
     );

@@ -31,9 +31,23 @@ export default function Map({ places }: MapProps) {
         };
     }, []);
 
+    // Référence aux marqueurs pour pouvoir les supprimer
+    const markersRef = useRef<mapboxgl.Marker[]>([]);
+
     // Ajout des marqueurs et centrage de la carte en fonction des lieux
     useEffect(() => {
-        if (!mapRef.current || places.length === 0) return;
+        if (!mapRef.current) return;
+
+        // Supprimer tous les marqueurs existants
+        markersRef.current.forEach(marker => marker.remove());
+        markersRef.current = [];
+
+        if (places.length === 0) {
+            // Si aucun lieu n'est trouvé, centrer la carte sur une position par défaut
+            mapRef.current.setCenter([2.3522, 48.8566]); // Paris
+            mapRef.current.setZoom(5);
+            return;
+        }
 
         // Création d'une bounding box pour englober tous les points
         const bounds = new mapboxgl.LngLatBounds();
@@ -70,10 +84,13 @@ export default function Map({ places }: MapProps) {
                 .addClassName('black-close-button');
 
             if (mapRef.current) {
-                new mapboxgl.Marker(markerElement)
+                const marker = new mapboxgl.Marker(markerElement)
                     .setLngLat(coordinates)
                     .setPopup(popup)
                     .addTo(mapRef.current);
+
+                // Stocker le marqueur pour pouvoir le supprimer plus tard
+                markersRef.current.push(marker);
             }
 
             // Extension de la bounding box pour inclure ce point
