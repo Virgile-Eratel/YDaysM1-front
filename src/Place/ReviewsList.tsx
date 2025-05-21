@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { Box, Typography, Rating, Paper, Avatar, CircularProgress, Divider, Stack } from "@mui/material";
-import dayjs, { formatDate } from "../utils/dateConfig";
+import { formatDate } from "../utils/dateConfig";
 
 interface UserType {
     id: number;
@@ -172,28 +172,45 @@ export default function ReviewsList({ placeId }: ReviewsListProps) {
 
                 return (
                     <Paper key={review.id} elevation={1} sx={{ p: 2, mb: 2 }}>
-                        <Box display="flex" mb={1}>
-                            <Avatar sx={{ mr: 2 }}>
+                        <Box sx={{
+                            display: "flex",
+                            flexDirection: { xs: "column", sm: "row" },
+                            mb: 1
+                        }}>
+                            <Avatar sx={{ mr: 2, mb: { xs: 1, sm: 0 } }}>
                                 {authorInitial}
                             </Avatar>
-                            <Box display="flex" alignItems="between" width="100%">
-                            <Box display="flex" flexDirection="column" alignItems="flex-start" >
-                                <Typography variant="subtitle1">
-                                    {authorEmail}
-                                </Typography>
-                                <Typography variant="caption" color="text.secondary">
-                                    {formatDate(review.createdAt)}
-                                </Typography>
-                            </Box>
-                                <Box display="flex" flexDirection="column" alignItems="flex-start" flex="1"/>
+                            <Box sx={{
+                                display: "flex",
+                                flexDirection: { xs: "column", sm: "row" },
+                                alignItems: { xs: "flex-start", sm: "center" },
+                                justifyContent: "space-between",
+                                width: "100%"
+                            }}>
+                                <Box display="flex" flexDirection="column" alignItems="flex-start">
+                                    <Typography variant="subtitle1">
+                                        {authorEmail}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        {formatDate(review.createdAt)}
+                                    </Typography>
+                                </Box>
 
-                                <Rating value={Number(review.rating) || 0} readOnly precision={1} sx={{ mb: 1 }} />
+                                <Rating
+                                    value={Number(review.rating) || 0}
+                                    readOnly
+                                    precision={1}
+                                    sx={{
+                                        mt: { xs: 1, sm: 0 },
+                                        fontSize: { xs: '1rem', sm: '1.25rem' }
+                                    }}
+                                />
                             </Box>
                         </Box>
                         <Box display="flex" flexDirection="column" alignItems="flex-start" mb={1}>
-                        <Typography variant="body1">
-                            {review.message}
-                        </Typography>
+                            <Typography variant="body1">
+                                {review.message}
+                            </Typography>
                         </Box>
                     </Paper>
                 );
