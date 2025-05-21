@@ -187,7 +187,7 @@ export default function CreatePlaceForm() {
             if (!response.ok) {
                 setNotification({
                     open: true,
-                    message: "Erreur lors de la création du lieu.",
+                    message: "Erreur lors de la création de l'espace.",
                     severity: "error",
                 });
                 setLoading(false);
@@ -217,7 +217,7 @@ export default function CreatePlaceForm() {
             console.error(error);
             setNotification({
                 open: true,
-                message: "Erreur lors de la création du lieu.",
+                message: "Erreur lors de la création de l'espace.",
                 severity: "error",
             });
             setLoading(false);
@@ -245,7 +245,7 @@ export default function CreatePlaceForm() {
                 }}
             >
                 <Typography variant="h5" fontWeight="bold" textAlign="center">
-                    Créer un lieu
+                    Ajouter votre espace
                 </Typography>
                 <TextField
                     label="Titre"
@@ -342,7 +342,7 @@ export default function CreatePlaceForm() {
                 )}
 
                 <Button variant="contained" type="submit" disabled={loading}>
-                    {loading ? <CircularProgress size={24} /> : "Créer le lieu"}
+                    {loading ? <CircularProgress size={24} /> : "Ajouter l'espace"}
                 </Button>
             </Box>
 

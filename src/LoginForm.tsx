@@ -1,7 +1,8 @@
 import { Alert, Button, CircularProgress, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 import { useLogin } from "./hooks/useLogin";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { notifyRoleChange } from "./hooks/useUserTheme";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,8 @@ export function LoginForm() {
       if (data?.userId) {
         localStorage.setItem("userId", data.userId.toString());
       }
+      // Notifier le changement de rôle pour mettre à jour le thème
+      notifyRoleChange();
       navigate("/home");
     }  }
 

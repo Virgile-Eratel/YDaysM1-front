@@ -1,6 +1,7 @@
 // src/hooks/useLogin.ts
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { notifyRoleChange } from "./useUserTheme";
 
 // On peut définir précisément la forme du JSON renvoyé par l’API
 // Ici, on suppose qu’il n’y a qu’un champ "token" dans la réponse :
@@ -53,6 +54,9 @@ export function useLogin(): UseLoginReturn {
       if (responseData.userId) {
         localStorage.setItem("userId", responseData.userId.toString());
       }
+
+      // Notifier le changement de rôle pour mettre à jour le thème
+      notifyRoleChange();
 
       // Redirection vers la page d’accueil ("/home", par exemple)
       navigate("/home");

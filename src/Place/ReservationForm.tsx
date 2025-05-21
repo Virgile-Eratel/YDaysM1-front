@@ -105,7 +105,7 @@ export default function ReservationForm({ place }: ReservationFormProps) {
     return (
         <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
             <Typography variant="h6" gutterBottom>
-                Réserver ce lieu
+                Réserver cet espace
             </Typography>
 
             <Box component="form" onSubmit={handleSubmit}>

@@ -248,7 +248,7 @@ export default function UserReservations() {
                                                 color="primary"
                                                 onClick={() => navigate(`/place/${typeof reservation.place === 'object' ? reservation.place.id : ''}`)}
                                             >
-                                                Voir le lieu
+                                                Voir l'espace
                                             </Button>
                                         )}
                                     </Box>

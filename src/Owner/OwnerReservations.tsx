@@ -369,7 +369,7 @@ function ReservationTable({ reservations, onComplete, onConfirm, onCancel }: Res
                         </Tooltip>
                       </>
                   )}
-                  <Tooltip title="Voir le logement">
+                  <Tooltip title="Voir l'espace">
                     <IconButton
                         color="info"
                         onClick={() => navigate(`/place/${reservation.place.id}`)}

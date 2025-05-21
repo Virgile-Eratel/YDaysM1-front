@@ -3,7 +3,7 @@ import {AppBar, Toolbar, Container, IconButton, Menu, MenuItem, Button, Divider}
 import {Outlet, useNavigate} from 'react-router-dom';
 import {AccountCircle, Add} from "@mui/icons-material";
 import { ThemeProvider } from '@mui/material/styles';
-import { useUserTheme } from './hooks/useUserTheme';
+import { useUserTheme, notifyRoleChange } from './hooks/useUserTheme';
 
 const Layout: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -16,6 +16,10 @@ const Layout: React.FC = () => {
         localStorage.removeItem('roleUser');
         localStorage.removeItem('emailUser');
         localStorage.removeItem('userId');
+
+        // Notifier le changement de rôle pour mettre à jour le thème
+        notifyRoleChange();
+
         setAnchorEl(null);
         navigate("/login");
     }

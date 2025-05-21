@@ -91,7 +91,7 @@ function Home() {
           </div>
         ) : filteredPlaces.length <= 0 ? (
           <div className="text-xl text-center p-10">
-            Aucun lieu ne correspond à votre recherche
+            Aucun espace ne correspond à votre recherche
           </div>
         ) : view === 'map' ? (
           <Map places={filteredPlaces} />
